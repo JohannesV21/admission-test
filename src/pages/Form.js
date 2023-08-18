@@ -8,11 +8,11 @@ import {
   FormControl,
 } from "@mui/material";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useGetAllTypesPokemons } from "../hooks/useGetAllTypesPokemons";
-import { itemData } from "../components/ImageList";
+import { itemData } from "../utils/ImageList";
 import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -27,6 +27,7 @@ export default function Form({ allPokemons }) {
   const [tempSelectedImage, setTempSelectedImage] = useState(null);
   const location = useLocation();
   const pokemonDetail = location.state?.pokemonDetail;
+  const navigate = useNavigate();
 
   const {
     register,
@@ -50,6 +51,7 @@ export default function Form({ allPokemons }) {
     });
 
     setEditedPokemons(newEditedPokemons);
+    navigate(`/`);
     // console.log("edit", newEditedPokemons);
   };
 
@@ -148,16 +150,7 @@ export default function Form({ allPokemons }) {
           variant="contained"
           color="primary"
         >
-          <Link
-            style={{
-              textDecoration: "none",
-              fontWeight: "bold",
-              color: "white",
-            }}
-            to="/"
-          >
-            Submit
-          </Link>
+          Submit
         </Button>
       </form>
     </Box>
