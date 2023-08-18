@@ -5,6 +5,8 @@ import { getAllPokemons } from "../services/pokemon/pokemonService";
 import { useGetAllPokemons } from "../hooks/useGetAllPokemons";
 import { Grid, Paper } from "@mui/material";
 import Progress from "../components/Progress";
+import { DataGrid } from "@mui/x-data-grid";
+import PokemonTable from "../components/CustomTable";
 
 export default function Home(props) {
   const { isLoading, pokemonData } = useGetAllPokemons();
@@ -15,6 +17,23 @@ export default function Home(props) {
   // }, [pokemonData]);
 
   console.log("HOME", pokemonData);
+
+  const transformedData = pokemonData.map((pokemon) => {
+    return {
+      name: pokemon.name,
+      id_pokemon: pokemon.id,
+      html_image: pokemon.sprites.front_default,
+      html_types: pokemon.types.map((typeObj) => typeObj.type.name).join(", "),
+      // Amigos y Descripción podrían necesitar otro llamado API, aquí hay placeholders
+      teammates: "TODO",
+      description: "TODO",
+      height: pokemon.height,
+      weight: pokemon.weight,
+      // Otros campos que necesites
+    };
+  });
+
+  // console.log(transformedData);
 
   const { tableRows } = props;
 
@@ -45,22 +64,23 @@ export default function Home(props) {
         />
       ) : (
         "Loading..."
-      )} */}
-      {/* {isLoading ? (
+      )} 
+      */}
+
+      {isLoading ? (
         <Progress />
       ) : (
         <>
-          {pokemonData.map((pokemon, id) => {
-            return (
-              <p>
-                {id}: {pokemon.name}
-              </p>
-            );
-          })}
+          {/* <EnhancedTable rowsProp={pokemonData} /> */}
+          <PokemonTable pokemons={pokemonData} />
         </>
-      )} */}
+      )}
+      {/* <EnhancedTable
+        rowsProp={pokemonData}
+        handleEditButton={handleEditButton}
+      /> */}
 
-      <EnhancedTable />
+      {/* <EnhancedTable rowsProp={pokemonData} /> */}
     </div>
   );
 }

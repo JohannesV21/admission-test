@@ -17,32 +17,33 @@ const spriteTitles = {
 };
 
 export default function Form(props) {
-  const location = useLocation();
-  // * Use navigate to return root path
-  const navigate = useNavigate();
-  const { sprites, id_pokemon } = location.state;
+  // const location = useLocation();
+  // // * Use navigate to return root path
+  // const navigate = useNavigate();
+  // const { sprites, id_pokemon } = location.state;
 
-  const { pokemonTypesOptions, tableRows, handleUpdatePokemonRow } = props;
+  // const { pokemonTypesOptions, tableRows, handleUpdatePokemonRow } = props;
 
-  const onSubmit = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    handleUpdatePokemonRow({});
-  };
+  // const onSubmit = (e) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   handleUpdatePokemonRow({});
+  // };
 
   return (
-    <form>
-      <Text label={"New name"} defaultValue={foundPokemon.my_name} />
+    // <form>
+    //   <Text label={"New name"} defaultValue={foundPokemon.my_name} />
 
-      <Select label={"New type"} defaultValue={foundPokemon.my_types} />
-      <Select
-        label={"Best teammate"}
-        defaultValue={foundPokemon.my_teammates}
-      />
+    //   <Select label={"New type"} defaultValue={foundPokemon.my_types} />
+    //   <Select
+    //     label={"Best teammate"}
+    //     defaultValue={foundPokemon.my_teammates}
+    //   />
 
-      <ImageList defaultValue={foundPokemon.my_sprite} />
+    //   <ImageList defaultValue={foundPokemon.my_sprite} />
 
-      <button>Submit</button>
-    </form>
+    //   <button>Submit</button>
+    // </form>
+    <h1>form</h1>
   );
 }
