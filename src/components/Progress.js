@@ -10,7 +10,12 @@ export default function Progress() {
       justifyContent="center"
       alignItems="center"
     >
-      <Box>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDirection={"column"}
+      >
         <CircularProgress />
         <h2>Loading...</h2>
       </Box>
