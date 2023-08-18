@@ -5,7 +5,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import SelectMiu from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 
 const ITEM_HEIGHT = 48;
@@ -59,7 +59,7 @@ export default function Select() {
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="demo-multiple-chip-label">Selección</InputLabel>
-        <Select
+        <SelectMiu
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
@@ -84,7 +84,7 @@ export default function Select() {
               {name}
             </MenuItem>
           ))}
-        </Select>
+        </SelectMiu>
       </FormControl>
     </div>
   );
