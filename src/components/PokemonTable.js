@@ -12,12 +12,19 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
+import Modal from '@mui/material/Modal';
+import { useGetAllPokemons } from "../hooks/useGetAllPokemons";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function PokemonTable({ pokemons }) {
+  const [open, setOpen] = React.useState(false);
+  const [selectedPokemonSprites, setSelectedPokemonSprites] = React.useState([]);
   const [filter, setFilter] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { editedPokemons } = useContext(PokemonContext);
+  const { pokemonSprites } = useGetAllPokemons()
   const navigate = useNavigate();
 
   //==================================================================
@@ -40,13 +47,6 @@ export default function PokemonTable({ pokemons }) {
     return pokemon;
   };
   //==================================================================
-
-  // const handleEditClick = (pokemonName) => {
-  //   const pokemonDetail = pokemons.find(
-  //     (pokemon) => pokemon.name === pokemonName
-  //   );
-  //   navigate(`/form/${pokemonName}`, { state: { pokemonDetail } });
-  // };
 
   const handleEditClick = (pokemonName) => {
     let pokemonDetail = pokemons.find(
@@ -83,6 +83,17 @@ export default function PokemonTable({ pokemons }) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  // modal
+  const handleOpen = (pokemonName) => {
+    const sprites = pokemonSprites.find(p => p.name === pokemonName).sprites || [];
+    setSelectedPokemonSprites(sprites);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -144,6 +155,8 @@ export default function PokemonTable({ pokemons }) {
                         src={displayPokemon.image}
                         alt={displayPokemon.name}
                         width="50"
+                        onClick={() => handleOpen(displayPokemon.name)}
+                        style={{ cursor: "pointer" }}
                       />
                     </TableCell>
                     <TableCell align="center">
@@ -179,6 +192,42 @@ export default function PokemonTable({ pokemons }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          // p: 4,
+          width: '350px',
+          height: '360px',
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <Carousel showIndicators={true} showThumbs={false} infiniteLoop={true}>
+            {selectedPokemonSprites.map((sprite, index) => (
+              <div key={index}>
+                <img src={sprite.image} alt={sprite.title} style={{
+                  maxWidth: '500px',
+                  maxHeight: '500px',
+                  display: 'block',
+                  margin: '0 auto',
+                  objectFit: 'cover'
+                }} />
+              </div>
+            ))}
+          </Carousel>
+        </Box>
+      </Modal>
     </Box>
   );
 }
