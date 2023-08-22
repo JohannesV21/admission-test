@@ -1,16 +1,8 @@
-import {
-  TextField,
-  Button,
-  Box,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-} from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useGetAllTypesPokemons } from "../hooks/useGetAllTypesPokemons";
 import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
@@ -20,35 +12,48 @@ import { useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
 import { useGetAllPokemons } from "../hooks/useGetAllPokemons";
 import Progress from "../components/Progress";
+import { MultiSelect } from "react-multi-select-component";
 
 export default function Form({ allPokemons }) {
   const location = useLocation();
   const navigate = useNavigate();
   const pokemonDetail = location.state?.pokemonDetail;
-  const { setEditedPokemons } = useContext(PokemonContext);
+  const { editedPokemons, setEditedPokemons } = useContext(PokemonContext);
   const { pokemonName } = useParams();
   const { pokemonTypeData } = useGetAllTypesPokemons();
-  const { pokemonSprites } = useGetAllPokemons()
   const [tempSelectedImage, setTempSelectedImage] = useState(null);
+  const { pokemonSprites } = useGetAllPokemons();
+
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
+    control,
     formState: { errors },
   } = useForm();
 
+  const watchedTypes = watch("types", []);
+  console.log("EDITED:", editedPokemons)
+
   // filter the sprite by the id of the selected pokemon to edit
-  const validatedSprite = pokemonSprites.find(item => pokemonDetail.id_pokemon === item.id);
-  // console.log(validatedSprite)
+  const validatedSprite = pokemonSprites.find(
+    (item) => pokemonDetail.id_pokemon === item.id
+  );
 
   const onSubmit = (data) => {
-    const newEditedPokemons = allPokemons.map((pokemon) => {
+    // console.log(data)
+    data.types = data.types.join(", ");
+    data.friends = data.friends.map((friend) => friend.label).join(", ");
+
+    const newEditedPokemons = editedPokemons.map((pokemon) => {
       if (pokemon.name === pokemonName) {
         return {
           ...pokemon,
           name: data.name || pokemon.name,
           image: data.image || pokemon.image,
           types: data.types || pokemon.types,
+          teammates: data.friends || pokemon.teammates,
           description: data.description || pokemon.description,
         };
       }
@@ -64,6 +69,19 @@ export default function Form({ allPokemons }) {
     setTempSelectedImage(imgUrl);
     setValue("image", imgUrl);
   };
+
+  const options = pokemonTypeData.map((item) => {
+    return { label: item.name, value: item.name };
+  });
+
+  const filteredPokemonForFriends = allPokemons.filter((pokemon) =>
+    watchedTypes.some((type) => pokemon.types.includes(type))
+  );
+
+  const friendsOptions = filteredPokemonForFriends.map((pokemon) => ({
+    label: pokemon.name,
+    value: pokemon.id_pokemon,
+  }));
 
   return (
     <Box margin="50px auto" width="80%">
@@ -93,7 +111,6 @@ export default function Form({ allPokemons }) {
         )}
 
         {/* Input description */}
-
         <TextField
           label="Description"
           placeholder={pokemonDetail.description}
@@ -105,20 +122,53 @@ export default function Form({ allPokemons }) {
           <span style={{ color: "red" }}>This field is required</span>
         )}
 
-        <FormControl fullWidth style={{ marginTop: "20px" }}>
-          <InputLabel id="demo-simple-select-label">Types</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="types"
-            {...register("types", { required: true })}
-          >
-            {pokemonTypeData.map((item) => {
-              return <MenuItem value={item.name}>{item.name}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
+        {/* Input Multiselect */}
+        <Controller
+          name="types"
+          control={control}
+          defaultValue={[]}
+          render={({ field }) => (
+            <MultiSelect
+              className="multiselect-form"
+              options={options}
+              value={field.value.map((type) => ({ label: type, value: type }))}
+              onChange={(selected) => {
+                const newValues = selected.map((s) => s.value);
+                field.onChange(newValues);
+              }}
+              labelledBy="Select Types"
+              overrideStrings={{
+                selectSomeItems: "Select types"
+              }}
+            />
+          )}
+        />
 
+        <Controller
+          name="friends"
+          control={control}
+          defaultValue={[]}
+          render={({ field }) => (
+            <MultiSelect
+              className="multiselect-form"
+              options={friendsOptions}
+              value={field.value}
+              onChange={(selected) => {
+                const newValues = selected.map((pokemonSelected) => ({
+                  label: pokemonSelected.label,
+                  value: pokemonSelected.value
+                }));
+                field.onChange(newValues);
+              }}
+              labelledBy="Select Friends"
+              overrideStrings={{
+                selectSomeItems: "Select friends"
+              }}
+            />
+          )}
+        />
+
+        {/* Select Image */}
         <Box
           display="flex"
           alignItems="center"
@@ -134,7 +184,11 @@ export default function Form({ allPokemons }) {
             <Progress />
           ) : (
             <>
-              <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+              <ImageList
+                sx={{ width: 500, height: 680 }}
+                cols={3}
+                rowHeight={164}
+              >
                 {validatedSprite.sprites.map((item, id) => (
                   <ImageListItem
                     key={id}
@@ -142,16 +196,12 @@ export default function Form({ allPokemons }) {
                     style={{
                       cursor: "pointer",
                       border:
-                        tempSelectedImage === item.image ? "3px solid red" : "none",
+                        tempSelectedImage === item.image
+                          ? "3px solid red"
+                          : "none",
                     }}
                   >
-                    <img
-                      // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      src={item.image}
-                      // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
+                    <img src={item.image} alt={item.title} loading="lazy" />
                   </ImageListItem>
                 ))}
               </ImageList>

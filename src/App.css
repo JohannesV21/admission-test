@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.multiselect-form {
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.multiselect-form .dropdown-heading-value span {
+  color: #6c6c6c;
+}

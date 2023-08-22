@@ -86,8 +86,10 @@ export default function PokemonTable({ pokemons }) {
   };
 
   // modal
-  const handleOpen = (pokemonName) => {
-    const sprites = pokemonSprites.find(p => p.name === pokemonName).sprites || [];
+  const handleOpen = (pokemonId) => {
+    const foundPokemon = pokemonSprites.find(p => p.id === pokemonId);
+    const sprites = foundPokemon ? foundPokemon.sprites : [];
+
     setSelectedPokemonSprites(sprites);
     setOpen(true);
   };
@@ -155,7 +157,7 @@ export default function PokemonTable({ pokemons }) {
                         src={displayPokemon.image}
                         alt={displayPokemon.name}
                         width="50"
-                        onClick={() => handleOpen(displayPokemon.name)}
+                        onClick={() => handleOpen(displayPokemon.id_pokemon)}
                         style={{ cursor: "pointer" }}
                       />
                     </TableCell>
@@ -164,7 +166,7 @@ export default function PokemonTable({ pokemons }) {
                     </TableCell>
                     <TableCell align="center">{displayPokemon.name}</TableCell>
                     <TableCell align="center">{displayPokemon.types}</TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center" style={{ whiteSpace: "normal" }}>
                       {displayPokemon.teammates}
                     </TableCell>
                     <TableCell align="center">
@@ -173,7 +175,7 @@ export default function PokemonTable({ pokemons }) {
                     <TableCell align="center">
                       {displayPokemon.weight}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center" style={{ whiteSpace: "normal", maxWidth: "250px", wordWrap: "break-word" }}>
                       {displayPokemon.description}
                     </TableCell>
                   </TableRow>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllPokemons } from "../services/pokemon/pokemonService";
-import { pokemonDataDetails } from "../helper/pokemonDetailsMap";
-import { pokemonSpritesMap } from "../helper/pokemonSpritesMap";
+import { pokemonDataDetails } from "../helpers/pokemonDetailsMap";
+import { pokemonSpritesMap } from "../helpers/pokemonSpritesMap";
 
 export const useGetAllPokemons = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -11,10 +11,10 @@ export const pokemonSpritesMap = (pokemonData) => {
         const gen4 = versions['generation-iv'] || {};
 
         const extractedSprites = [
-            sprites.back_default && { image: sprites.back_default, title: "back_default" },
-            sprites.back_shiny && { image: sprites.back_shiny, title: "back_shiny" },
             sprites.front_default && { image: sprites.front_default, title: "front_default" },
             sprites.front_shiny && { image: sprites.front_shiny, title: "front_shiny" },
+            sprites.back_default && { image: sprites.back_default, title: "back_default" },
+            sprites.back_shiny && { image: sprites.back_shiny, title: "back_shiny" },
             other.dream_world && other.dream_world.front_default && { image: other.dream_world.front_default, title: "dream_world_front_default" },
             other.home && other.home.front_default && { image: other.home.front_default, title: "home_front_default" },
             other.home && other.home.front_shiny && { image: other.home.front_shiny, title: "home_front_shiny" },
