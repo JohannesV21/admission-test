@@ -48,3 +48,53 @@ export const itemData = [
     title: "Bike",
   },
 ];
+
+// "sprites": 
+
+// [
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png", title: "back_default" },
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png", title: "back_shiny"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", title: "front_default"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png", title: "front_shiny"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg", title: "dream_world_front_default"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png", title: "home_front_default"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png", title: "home_front_shiny"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", title: "official-artwork_front_default"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png", title: "official-artwork_front_shiny"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/transparent/1.png", title: "versions_generation-i_red-blue_front_transparent"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/heartgold-soulsilver/1.png", title: "versions_generation-iv_heartgold-soulsilver_front_default"},
+//   {image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/heartgold-soulsilver/shiny/1.png", title: "versions_generation-iv_heartgold-soulsilver_front_shiny"}
+
+
+
+//   "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+//   "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
+//   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+//   "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+//   "other": {
+//   "dream_world": {
+//   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
+//   },
+//   "home": {
+//   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png",
+//   "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/1.png",
+//   },
+//   "official-artwork": {
+//   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+//   "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png"
+//   }
+//   },
+//   "versions": {
+//   "generation-i": {
+//   "red-blue": {
+//   "front_transparent": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/transparent/1.png"
+//   },
+//   },
+//   "generation-iv": {
+//   "heartgold-soulsilver": {
+//   "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/heartgold-soulsilver/1.png",
+//   "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/heartgold-soulsilver/shiny/1.png",
+//   },
+//   },
+//   }
+// ]

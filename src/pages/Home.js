@@ -6,6 +6,8 @@ import PokemonTable from "../components/PokemonTable";
 export default function Home(props) {
   const { isLoading, pokemonDetails } = useGetAllPokemons();
 
+  console.log("SPRITES: ", pokemonDetails)
+
   return (
     <div>
       {isLoading ? (

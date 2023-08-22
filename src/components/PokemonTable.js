@@ -41,10 +41,26 @@ export default function PokemonTable({ pokemons }) {
   };
   //==================================================================
 
+  // const handleEditClick = (pokemonName) => {
+  //   const pokemonDetail = pokemons.find(
+  //     (pokemon) => pokemon.name === pokemonName
+  //   );
+  //   navigate(`/form/${pokemonName}`, { state: { pokemonDetail } });
+  // };
+
   const handleEditClick = (pokemonName) => {
-    const pokemonDetail = pokemons.find(
+    let pokemonDetail = pokemons.find(
       (pokemon) => pokemon.name === pokemonName
     );
+
+    const editedVersion = editedPokemons.find(
+      (pokemon) => pokemon.name === pokemonName
+    );
+
+    if (editedVersion) {
+      pokemonDetail = editedVersion;
+    }
+
     navigate(`/form/${pokemonName}`, { state: { pokemonDetail } });
   };
 
@@ -117,7 +133,9 @@ export default function PokemonTable({ pokemons }) {
                       />
                     </TableCell>
                     <TableCell align="center">
-                      <Button onClick={() => handleEditClick(pokemon.name)}>
+                      <Button
+                        onClick={() => handleEditClick(displayPokemon.name)}
+                      >
                         Editar
                       </Button>
                     </TableCell>

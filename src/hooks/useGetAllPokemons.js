@@ -6,6 +6,7 @@ export const useGetAllPokemons = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonDetails, setPokemonDetails] = useState([]);
+  const [pokemonSprites, setPokemonSprites] = useState([]);
 
   const allPokemons = () => {
     setIsLoading(true);
@@ -15,6 +16,7 @@ export const useGetAllPokemons = () => {
 
         setPokemonData(res);
         setPokemonDetails(details);
+        // setPokemonSprites(sprites);
         setIsLoading(false);
       })
       .catch((err) => {

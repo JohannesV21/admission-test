@@ -4,7 +4,7 @@ export const getAllPokemons = () => {
   return new Promise((resolve, reject) => {
     http
       // .get(`${BACK_URL}/pokemon?limit=100000&offset=0`)
-      .get(`${BACK_URL}/pokemon?limit=500&offset=0`)
+      .get(`${BACK_URL}/pokemon?limit=20&offset=0`)
       .then((res) => {
         // Getting pokemon list
         const pokemons = res.data.results;

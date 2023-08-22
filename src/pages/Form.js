@@ -75,6 +75,7 @@ export default function Form({ allPokemons }) {
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Input name */}
         <TextField
           label="New name"
           placeholder={pokemonDetail.name}
@@ -85,6 +86,8 @@ export default function Form({ allPokemons }) {
         {errors.name && (
           <span style={{ color: "red" }}>This field is required</span>
         )}
+
+        {/* Input description */}
 
         <TextField
           label="Description"
@@ -123,9 +126,9 @@ export default function Form({ allPokemons }) {
             value={tempSelectedImage || ""}
           />
           <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-            {itemData.map((item) => (
+            {itemData.map((item, id) => (
               <ImageListItem
-                key={item.img}
+                key={id}
                 onClick={() => handleImageClick(item.img)}
                 style={{
                   cursor: "pointer",
