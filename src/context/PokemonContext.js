@@ -5,7 +5,6 @@ export const PokemonContext = createContext();
 
 export const PokemonProvider = ({ children }) => {
   const { pokemonDetails } = useGetAllPokemons();
-  // const [editedPokemons, setEditedPokemons] = useState([]);
   const [editedPokemons, setEditedPokemons] = useState([]);
 
   useEffect(() => {

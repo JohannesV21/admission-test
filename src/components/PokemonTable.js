@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
-import Modal from '@mui/material/Modal';
 import { useGetAllPokemons } from "../hooks/useGetAllPokemons";
-import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import PokemonModal from "./PokemonModal";
+import { handleClickEditPokemon } from "../helpers/handleClickEditPokemon";
 
 export default function PokemonTable({ pokemons }) {
   const [open, setOpen] = React.useState(false);
@@ -47,22 +47,6 @@ export default function PokemonTable({ pokemons }) {
     return pokemon;
   };
   //==================================================================
-
-  const handleEditClick = (pokemonName) => {
-    let pokemonDetail = pokemons.find(
-      (pokemon) => pokemon.name === pokemonName
-    );
-
-    const editedVersion = editedPokemons.find(
-      (pokemon) => pokemon.name === pokemonName
-    );
-
-    if (editedVersion) {
-      pokemonDetail = editedVersion;
-    }
-
-    navigate(`/form/${pokemonName}`, { state: { pokemonDetail } });
-  };
 
   // Filter handlers
 
@@ -147,7 +131,7 @@ export default function PokemonTable({ pokemons }) {
                     </TableCell>
                     <TableCell align="center">
                       <Button
-                        onClick={() => handleEditClick(displayPokemon.name)}
+                        onClick={() => handleClickEditPokemon(displayPokemon.name, pokemons, editedPokemons, navigate)}
                       >
                         Editar
                       </Button>
@@ -195,41 +179,11 @@ export default function PokemonTable({ pokemons }) {
         />
       </TableContainer>
 
-      <Modal
+      <PokemonModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          // p: 4,
-          width: '350px',
-          height: '360px',
-          overflow: 'auto',
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <Carousel showIndicators={true} showThumbs={false} infiniteLoop={true}>
-            {selectedPokemonSprites.map((sprite, index) => (
-              <div key={index}>
-                <img src={sprite.image} alt={sprite.title} style={{
-                  maxWidth: '500px',
-                  maxHeight: '500px',
-                  display: 'block',
-                  margin: '0 auto',
-                  objectFit: 'cover'
-                }} />
-              </div>
-            ))}
-          </Carousel>
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        selectedPokemonSprites={selectedPokemonSprites}
+      />
     </Box>
   );
 }

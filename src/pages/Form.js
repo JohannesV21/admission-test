@@ -1,10 +1,9 @@
 import { TextField, Button, Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { useGetAllTypesPokemons } from "../hooks/useGetAllTypesPokemons";
-import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Link } from "react-router-dom";
@@ -34,7 +33,6 @@ export default function Form({ allPokemons }) {
   } = useForm();
 
   const watchedTypes = watch("types", []);
-  console.log("EDITED:", editedPokemons)
 
   // filter the sprite by the id of the selected pokemon to edit
   const validatedSprite = pokemonSprites.find(
@@ -42,7 +40,6 @@ export default function Form({ allPokemons }) {
   );
 
   const onSubmit = (data) => {
-    // console.log(data)
     data.types = data.types.join(", ");
     data.friends = data.friends.map((friend) => friend.label).join(", ");
 
@@ -62,7 +59,6 @@ export default function Form({ allPokemons }) {
 
     setEditedPokemons(newEditedPokemons);
     navigate(`/`);
-    // console.log("edit", newEditedPokemons);
   };
 
   const handleImageClick = (imgUrl) => {
@@ -138,7 +134,7 @@ export default function Form({ allPokemons }) {
               }}
               labelledBy="Select Types"
               overrideStrings={{
-                selectSomeItems: "Select types"
+                selectSomeItems: "Select types",
               }}
             />
           )}
@@ -156,13 +152,13 @@ export default function Form({ allPokemons }) {
               onChange={(selected) => {
                 const newValues = selected.map((pokemonSelected) => ({
                   label: pokemonSelected.label,
-                  value: pokemonSelected.value
+                  value: pokemonSelected.value,
                 }));
                 field.onChange(newValues);
               }}
               labelledBy="Select Friends"
               overrideStrings={{
-                selectSomeItems: "Select friends"
+                selectSomeItems: "Select friends",
               }}
             />
           )}
