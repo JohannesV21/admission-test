@@ -4,9 +4,9 @@ import Progress from "../components/Progress";
 import PokemonTable from "../components/PokemonTable";
 
 export default function Home(props) {
-  const { isLoading, pokemonDetails } = useGetAllPokemons();
+  const { isLoading, pokemonDetails, pokemonSprites } = useGetAllPokemons();
 
-  console.log("SPRITES: ", pokemonDetails)
+  console.log("SPRITES: ", pokemonSprites)
 
   return (
     <div>

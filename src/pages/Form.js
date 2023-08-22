@@ -12,29 +12,34 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useGetAllTypesPokemons } from "../hooks/useGetAllTypesPokemons";
-import { itemData } from "../utils/ImageList";
 import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { PokemonContext } from "../context/PokemonContext";
+import { useGetAllPokemons } from "../hooks/useGetAllPokemons";
+import Progress from "../components/Progress";
 
 export default function Form({ allPokemons }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pokemonDetail = location.state?.pokemonDetail;
   const { setEditedPokemons } = useContext(PokemonContext);
   const { pokemonName } = useParams();
   const { pokemonTypeData } = useGetAllTypesPokemons();
+  const { pokemonSprites } = useGetAllPokemons()
   const [tempSelectedImage, setTempSelectedImage] = useState(null);
-  const location = useLocation();
-  const pokemonDetail = location.state?.pokemonDetail;
-  const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm();
+
+  // filter the sprite by the id of the selected pokemon to edit
+  const validatedSprite = pokemonSprites.find(item => pokemonDetail.id_pokemon === item.id);
+  // console.log(validatedSprite)
 
   const onSubmit = (data) => {
     const newEditedPokemons = allPokemons.map((pokemon) => {
@@ -125,26 +130,33 @@ export default function Form({ allPokemons }) {
             type="hidden"
             value={tempSelectedImage || ""}
           />
-          <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-            {itemData.map((item, id) => (
-              <ImageListItem
-                key={id}
-                onClick={() => handleImageClick(item.img)}
-                style={{
-                  cursor: "pointer",
-                  border:
-                    tempSelectedImage === item.img ? "3px solid red" : "none",
-                }}
-              >
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
+          {!validatedSprite ? (
+            <Progress />
+          ) : (
+            <>
+              <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                {validatedSprite.sprites.map((item, id) => (
+                  <ImageListItem
+                    key={id}
+                    onClick={() => handleImageClick(item.image)}
+                    style={{
+                      cursor: "pointer",
+                      border:
+                        tempSelectedImage === item.image ? "3px solid red" : "none",
+                    }}
+                  >
+                    <img
+                      // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                      src={item.image}
+                      // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </>
+          )}
         </Box>
 
         <Button

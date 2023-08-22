@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllPokemons } from "../services/pokemon/pokemonService";
 import { pokemonDataDetails } from "../helper/pokemonDetailsMap";
+import { pokemonSpritesMap } from "../helper/pokemonSpritesMap";
 
 export const useGetAllPokemons = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,10 +14,11 @@ export const useGetAllPokemons = () => {
     getAllPokemons()
       .then((res) => {
         const details = pokemonDataDetails(res);
+        const sprites = pokemonSpritesMap(res)
 
         setPokemonData(res);
         setPokemonDetails(details);
-        // setPokemonSprites(sprites);
+        setPokemonSprites(sprites);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -30,5 +32,5 @@ export const useGetAllPokemons = () => {
     allPokemons();
   }, []);
 
-  return { isLoading, pokemonData, pokemonDetails };
+  return { isLoading, pokemonData, pokemonDetails, pokemonSprites };
 };
